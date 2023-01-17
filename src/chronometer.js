@@ -1,33 +1,67 @@
 class Chronometer {
   constructor() {
-    // ... your code goes here
-  }
+this.currentTime = 0; 
+this.intervalId = null; 
+}
 
-  start(printTimeCallback) {
-    // ... your code goes here
-  }
+start(printTimeCallback) {
 
-  getMinutes() {
-    // ... your code goes here
-  }
+  this.intervalId = setInterval(() => {
+    this.currentTime++
+    if(printTimeCallback){
+      printTimeCallback()
+    }
+  }, 1000)
+}
 
-  getSeconds() {
-    // ... your code goes here
-  }
 
-  computeTwoDigitNumber(value) {
-    // ... your code goes here
-  }
+  getMinutes() {return Math.floor(this.currentTime / 60);}
 
-  stop() {
-    // ... your code goes here
-  }
+  getSeconds() {return this.currentTime % 60;}
 
-  reset() {
-    // ... your code goes here
-  }
+  computeTwoDigitNumber(value) {return ("0" + value).slice(-2);}
+
+  stop() {clearInterval(this.intervalId);}    
+
+  reset() {return this.currentTime = 0;}
 
   split() {
-    // ... your code goes here
+const min = this.computeTwoDigitNumber(this.getMinutes());
+const sec = this.computeTwoDigitNumber(this.getSeconds());
+const ms = this.computeTwoDigitNumber(this.getMilliseconds()); 
+return `${min}:${sec}:${ms}`
   }
 }
+
+// Bonus iteration 9 centiseconds
+
+const splits = document.getElementById('splits');
+
+function displayTime() {
+  displayMinutes();
+  displaySeconds(); 
+  displayMilliseconds(); 
+}
+
+function displayMinutes () {
+  minDecElement.innerText = 
+chronometer.computeTwoDigitNumber(chronometer.getMinutes())[0];
+  minUniElement.innerText =
+chronometer.computeTwoDigitNumber(chronometer.getMinutes())[1];
+}
+
+
+function displaySeconds () {
+  secDecElement.innerText = 
+chronometer.computeTwoDigitNumber(chronometer.getSeconds())[0]; 
+  sexUniElement.innerText = 
+chronometer.computeTwoDigitNumber(chronometer.getSeconds())[1];
+}
+
+function displayMilliseconds () {
+  msDecElement.innerHTML = 
+chronometer.computeTwoDigitNumber(chronometer.getMilliseconds())[0];
+  msUniElement.innerHTML =
+chronometer.computeTwoDigitNumber(chronometer.getMilliseconds())[1]; 
+}
+
